@@ -1,5 +1,38 @@
 .header{
-    height: 64px;
-    width: 2100px;
-    border: 1px solid red;
+    position: fixed;
+    right: 14px;
+    border-radius: 10px;
+    margin-top: 14px;
+    background-color: #404040;
+    height: 74px;
+    width: 244px;
+}
+
+.header h2{
+    position: absolute;
+    margin-top: 24px;
+    font-weight: 500;
+    font-weight: 500;
+    font-family: 'Karla', sans-serif;
+    color: white;
+    margin-right:12px;
+    font-size: 22px;
+    margin-left: 94px;
+}
+
+.header ion-icon{
+    color: #7dd87b;
+    margin-left: 19px;
+    margin-top: 20px;
+    font-size: 28px;
+    position: absolute;
+}
+
+.header img{
+    position: absolute;
+    margin-left: 184px;
+    margin-top: 14px;
+    height: 44px;
+    width: 44px;
+    border-radius: 50%;
 }

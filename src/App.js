@@ -1,9 +1,9 @@
 import logo from './logo.svg';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import './App.css';
 import Header from './components/Header';
 import LoginBox from './components/LoginBox';
 import SigninBox from './components/SigninBox';
+import Tasks from './components/Tasks';
 
 function App() {
   return (
@@ -11,7 +11,7 @@ function App() {
       <Routes>
         <Route path='/' element={<><LoginBox/></>}/>
         <Route path='/signin' element={<><SigninBox/></>}/>
-        <Route path='/home' element={<><Header/></>} />
+        <Route path='/home' element={<><Header/><Tasks/></>} />
       </Routes>
     </BrowserRouter>
   );

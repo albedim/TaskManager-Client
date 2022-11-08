@@ -1,4 +1,5 @@
 .login-box{
+    background-color: #404040;
     margin-top: 144px;
     height: 644px;
     width: 740px;
@@ -12,6 +13,12 @@
     width: 444px;
 }
 
+.loading{
+    position: absolute;
+    margin-top: 12px;
+    margin-left: 174px;
+}
+
 .box-login{
     display: flex;
     justify-content: space-around;
@@ -22,10 +29,11 @@
     margin-bottom: 54px;
     margin-left: 64px;
     font-size: 34px;
-    color: gray;
+    color: white;
 }
 
 .right-side label{
+    color: white;
     margin-top: 24px;
     font-size: 16px;
     display: block;
@@ -33,6 +41,8 @@
 }
 
 .right-side input{
+    background-color: transparent;
+    color: white;
     outline: none;
     border-bottom: 2px solid #7dd87b !important;
     border: none;

@@ -1,0 +1,72 @@
+.doingTasks{
+    background-color: #404040;
+    border-radius: 10px;
+    margin-left: 544px;
+    margin-top: 84px;
+    height: auto;
+    max-height: 644px;
+    width: 384px;
+    position: fixed;
+}
+
+.task{
+    margin-top: 14px;
+    background-color: #363636;
+    border-radius: 10px;
+    height: 134px;
+    margin-left: 18px;
+    width: 344px;
+}
+
+.task h2{
+    font-family: 'Karla', sans-serif;
+    position: absolute;
+    margin-top: 14px;
+    margin-left: 19px;
+    font-size: 19px;
+    color: #7dd87b;
+}
+
+.task h3{
+    font-family: 'Karla', sans-serif;
+    position: absolute;
+    margin-top: 48px;
+    margin-left: 19px;
+    font-size: 14px;
+    color: rgb(223, 223, 223);
+}
+
+.task h4{
+    font-family: 'Karla', sans-serif;
+    position: absolute;
+    margin-top: 94px;
+    margin-left: 19px;
+    font-size: 16px;
+    color: white;
+}
+
+.top{
+    top: 0;
+    height: 54px;
+}
+
+.bottom{
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    z-index: 1;
+    background-color: #404040;
+    height: 74px;
+}
+
+.top h2{
+    font-family: 'Karla', sans-serif;
+    margin-left: 34px;
+    color: white;
+}
+
+.bottom ion-icon{
+    margin-top: 24px;
+    margin-left: 34px;
+    font-size: 24px;
+    color: white;
+}
