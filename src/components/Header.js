@@ -15,9 +15,9 @@ export default function Home() {
   }
 
   const getData = () => {
-    axios.get("http://localhost:8080/api/user?id=" + window.localStorage.getItem("id"))
-      .then(response => { setData(response.data) })
-      .catch(error => { console.log(error) })
+    axios.get("http://localhost:8080/ap/v1_0_0/user/get?id=" + window.localStorage.getItem("id"))
+    .then(response => { setData(response.data) })
+    .catch(error => { console.log(error) })
   }
 
   useEffect(() => {

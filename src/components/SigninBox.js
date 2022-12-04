@@ -31,7 +31,7 @@ export default function SigninBox() {
     }
     reader.readAsDataURL(document.querySelector("#image").files[0])
     console.log(image)
-    await axios.post("http://localhost:8080/api/saveImage", image)
+    await axios.post("http://localhost:8080/api/v_1_0_0/user/saveImage", image)
       .then(response => { console.log(response.data) })
       .catch(error => { console.log(error) })
   }

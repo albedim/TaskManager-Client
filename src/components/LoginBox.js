@@ -24,7 +24,7 @@ export default function LoginBox() {
   const onSubmit = async (e) => {
     setIsLoading(true);
     e.preventDefault();
-    await axios.post('http://127.0.0.1:8080/api/login', data)
+    await axios.post('http://127.0.0.1:8080/api/v_1_0_0/user/login', data)
       .then(response => {
         if (response.data.success) {
           window.localStorage.setItem("id", parseInt(response.data.param))

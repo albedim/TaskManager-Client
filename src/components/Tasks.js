@@ -42,7 +42,7 @@ export default function Tasks() {
 
   const getDoingTasks = async () => {
     setIsLoadingDoing(true);
-    await axios.get("http://localhost:8080/api/task?id=" + window.localStorage.getItem("id") + "&status=doing")
+    await axios.get("http://localhost:8080/api/v_1_0_0/task/get?id=" + window.localStorage.getItem("id") + "&status=doing")
       .then(response => { setDoingTasks(response.data) })
       .catch(error => { console.log(error) })
     await sleep(400);
@@ -51,7 +51,7 @@ export default function Tasks() {
 
   const getDoneTasks = async () => {
     setIsLoadingDone(true);
-    await axios.get("http://localhost:8080/api/task?id=" + window.localStorage.getItem("id") + "&status=done")
+    await axios.get("http://localhost:8080/api/v_1_0_0/task/get?id=" + window.localStorage.getItem("id") + "&status=done")
       .then(response => { setDoneTasks(response.data) })
       .catch(error => { console.log(error) })
     await sleep(400);
@@ -60,7 +60,7 @@ export default function Tasks() {
 
   const getTodoTasks = async () => {
     setIsLoading(true);
-    await axios.get("http://localhost:8080/api/task?id=" + window.localStorage.getItem("id") + "&status=todo")
+    await axios.get("http://localhost:8080/api/v_1_0_0/task/get?id=" + window.localStorage.getItem("id") + "&status=todo")
       .then(response => { setTodoTasks(response.data) })
       .catch(error => { console.log(error) })
     await sleep(400);
@@ -68,7 +68,7 @@ export default function Tasks() {
   }
 
   const deleteTask = async (id) => {
-    await axios.delete("http://localhost:8080/api/task?id=" + id)
+    await axios.delete("http://localhost:8080/api/v_1_0_0/task/delete?id=" + id)
       .then(response => { console.log(response.data) })
       .catch(error => { console.log(error) })
     getTodoTasks()
@@ -94,7 +94,7 @@ export default function Tasks() {
 
   const getContributors = async (taskId) => {
     setIsLoadingContrs(true)
-    await axios.get("http://localhost:8080/api/contributors?taskId=" + taskId)
+    await axios.get("http://localhost:8080/api/v_1_0_0/contribution?get=" + taskId)
       .then(response => { setContributors(response.data) })
       .catch(error => { console.log(error) })
     await sleep(400);
@@ -142,14 +142,14 @@ export default function Tasks() {
   }
 
   const onSubmit = async () => {
-    await axios.post("http://localhost:8080/api/task", data)
+    await axios.post("http://localhost:8080/api/v_1_0_0/task/add", data)
       .then(response => { /*console.log(response.data)*/ })
       .catch(error => { console.log(error) })
     getTodoTasks();
   }
 
   const deleteContribution = async (userId, taskId = taskToChange.id) => {
-    await axios.delete("http://localhost:8080/api/contribution?userId=" + userId + "&taskId=" + taskId)
+    await axios.delete("http://localhost:8080/api/v_1_0_0/contribution/delete?userId=" + userId + "&taskId=" + taskId)
       .then(response => { /*console.log(response.data)*/ })
       .catch(error => { console.log(error) })
     getContributors(taskToChange.id);
@@ -157,14 +157,14 @@ export default function Tasks() {
 
   const changeData = async () => {
     if (typeof (taskToChange.completedDate) == "object")
-      await axios.put("http://localhost:8080/api/task", {
+      await axios.put("http://localhost:8080/api/v_1_0_0/task/change", {
         'id': taskToChange.id,
         'completedDate': fixDate(taskToChange.completedDate),
         'status': taskToChange.status
       })
         .then(response => { /*console.log(response.data)*/ })
         .catch(error => { console.log(error) })
-    else await axios.put("http://localhost:8080/api/task", {
+    else await axios.put("http://localhost:8080/api/v_1_0_0/task/change", {
       'id': taskToChange.id,
       'completedDate': taskToChange.completedDate,
       'status': taskToChange.status
@@ -177,7 +177,7 @@ export default function Tasks() {
   }
 
   const addContribution = async () => {
-    await axios.post("http://localhost:8080/api/contribution", {
+    await axios.post("http://localhost:8080/api/v_1_0_0/contribution/add", {
       'userNickname': contributorToAdd,
       'taskId': taskToChange.id
     })
