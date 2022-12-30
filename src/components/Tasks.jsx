@@ -61,7 +61,7 @@ export const Tasks = () => {
 
   const getTodoTasks = async () => {
     setIsLoading(true);
-    await axios.get(ENDPOINT + "/task/getid=" + window.localStorage.getItem("id") + "&status=todo")
+    await axios.get(ENDPOINT + "/task/get?id=" + window.localStorage.getItem("id") + "&status=todo")
       .then(response => { setTodoTasks(response.data) })
       .catch(error => { console.log(error) })
     await sleep(400);
@@ -143,7 +143,7 @@ export const Tasks = () => {
   }
 
   const onSubmit = async () => {
-    await axios.post(ENDPOINT + "/task", data)
+    await axios.post(ENDPOINT + "/task/add", data)
       .then(response => { /*console.log(response.data)*/ })
       .catch(error => { console.log(error) })
     getTodoTasks();
@@ -158,14 +158,14 @@ export const Tasks = () => {
 
   const changeData = async () => {
     if (typeof (taskToChange.completedDate) == "object")
-      await axios.put(ENDPOINT + "/task", {
+      await axios.put(ENDPOINT + "/task/change", {
         'id': taskToChange.id,
         'completedDate': fixDate(taskToChange.completedDate),
         'status': taskToChange.status
       })
         .then(response => { /*console.log(response.data)*/ })
         .catch(error => { console.log(error) })
-    else await axios.put(ENDPOINT + "/task", {
+    else await axios.put(ENDPOINT + "/task/change", {
       'id': taskToChange.id,
       'completedDate': taskToChange.completedDate,
       'status': taskToChange.status
@@ -247,9 +247,7 @@ export const Tasks = () => {
             ))
           )}
         </div>
-        <div className="bottom">
-          <div onClick={(e) => onClick(e)} ><ion-icon name="add-outline"></ion-icon></div>
-        </div>
+        <div className="bottom"></div>
       </div>
       <div className="doneTasks">
         <div className="top">
