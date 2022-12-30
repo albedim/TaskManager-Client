@@ -6,9 +6,10 @@ import "./styles/AddTask.css";
 import "./styles/TodoTasks.css";
 import "./styles/DoingTasks.css";
 import "./styles/DoneTasks.css";
+import { AT, CREATED_BY, CREATED_BY_AT, DOING_TITLE, DONE_TITLE, EDIT_FINISH_DATE, EDIT_STATUS, ENDPOINT, NEXT, TODO_TITLE, TO_FINISH_ON } from "../Utils.ts";
 
 
-export default function Tasks() {
+export const Tasks = () => {
   const [data, setData] = useState({
     'userId': window.localStorage.getItem("id"),
     'name': '',
@@ -42,7 +43,7 @@ export default function Tasks() {
 
   const getDoingTasks = async () => {
     setIsLoadingDoing(true);
-    await axios.get("http://localhost:8080/api/v_1_0_0/task/get?id=" + window.localStorage.getItem("id") + "&status=doing")
+    await axios.get(ENDPOINT + "/task/get?id=" + window.localStorage.getItem("id") + "&status=doing")
       .then(response => { setDoingTasks(response.data) })
       .catch(error => { console.log(error) })
     await sleep(400);
@@ -51,7 +52,7 @@ export default function Tasks() {
 
   const getDoneTasks = async () => {
     setIsLoadingDone(true);
-    await axios.get("http://localhost:8080/api/v_1_0_0/task/get?id=" + window.localStorage.getItem("id") + "&status=done")
+    await axios.get(ENDPOINT + "/task/get?id=" + window.localStorage.getItem("id") + "&status=done")
       .then(response => { setDoneTasks(response.data) })
       .catch(error => { console.log(error) })
     await sleep(400);
@@ -60,7 +61,7 @@ export default function Tasks() {
 
   const getTodoTasks = async () => {
     setIsLoading(true);
-    await axios.get("http://localhost:8080/api/v_1_0_0/task/get?id=" + window.localStorage.getItem("id") + "&status=todo")
+    await axios.get(ENDPOINT + "/task/getid=" + window.localStorage.getItem("id") + "&status=todo")
       .then(response => { setTodoTasks(response.data) })
       .catch(error => { console.log(error) })
     await sleep(400);
@@ -68,7 +69,7 @@ export default function Tasks() {
   }
 
   const deleteTask = async (id) => {
-    await axios.delete("http://localhost:8080/api/v_1_0_0/task/delete?id=" + id)
+    await axios.delete(ENDPOINT + "/task/delete?id=" + id)
       .then(response => { console.log(response.data) })
       .catch(error => { console.log(error) })
     getTodoTasks()
@@ -94,7 +95,7 @@ export default function Tasks() {
 
   const getContributors = async (taskId) => {
     setIsLoadingContrs(true)
-    await axios.get("http://localhost:8080/api/v_1_0_0/contribution?get=" + taskId)
+    await axios.get(ENDPOINT + "/contribution/get?taskId=" + taskId)
       .then(response => { setContributors(response.data) })
       .catch(error => { console.log(error) })
     await sleep(400);
@@ -142,14 +143,14 @@ export default function Tasks() {
   }
 
   const onSubmit = async () => {
-    await axios.post("http://localhost:8080/api/v_1_0_0/task/add", data)
+    await axios.post(ENDPOINT + "/task", data)
       .then(response => { /*console.log(response.data)*/ })
       .catch(error => { console.log(error) })
     getTodoTasks();
   }
 
   const deleteContribution = async (userId, taskId = taskToChange.id) => {
-    await axios.delete("http://localhost:8080/api/v_1_0_0/contribution/delete?userId=" + userId + "&taskId=" + taskId)
+    await axios.delete(ENDPOINT + "/contribution/delete?userId=" + userId + "&taskId=" + taskId)
       .then(response => { /*console.log(response.data)*/ })
       .catch(error => { console.log(error) })
     getContributors(taskToChange.id);
@@ -157,14 +158,14 @@ export default function Tasks() {
 
   const changeData = async () => {
     if (typeof (taskToChange.completedDate) == "object")
-      await axios.put("http://localhost:8080/api/v_1_0_0/task/change", {
+      await axios.put(ENDPOINT + "/task", {
         'id': taskToChange.id,
         'completedDate': fixDate(taskToChange.completedDate),
         'status': taskToChange.status
       })
         .then(response => { /*console.log(response.data)*/ })
         .catch(error => { console.log(error) })
-    else await axios.put("http://localhost:8080/api/v_1_0_0/task/change", {
+    else await axios.put(ENDPOINT + "/task", {
       'id': taskToChange.id,
       'completedDate': taskToChange.completedDate,
       'status': taskToChange.status
@@ -177,7 +178,7 @@ export default function Tasks() {
   }
 
   const addContribution = async () => {
-    await axios.post("http://localhost:8080/api/v_1_0_0/contribution/add", {
+    await axios.post(ENDPOINT + "/contribution/add", {
       'userNickname': contributorToAdd,
       'taskId': taskToChange.id
     })
@@ -196,7 +197,7 @@ export default function Tasks() {
     <div>
       <div className="tasks">
         <div className="top">
-          <h2>Da fare</h2>
+          <h2>{TODO_TITLE}</h2>
         </div>
         <div className="tasksContent">
           {isLoading ? (
@@ -206,12 +207,12 @@ export default function Tasks() {
               <div className="task">
                 <h2>{todoTask.name}</h2>
                 {todoTask.ownerId === parseInt(window.localStorage.getItem("id")) &&
-                  <h3>Creato da Te, il {todoTask.createdAt[2].toString() + "/" + todoTask.createdAt[1].toString() + "/" + todoTask.createdAt[0].toString()}</h3>
+                  <h3>{CREATED_BY_AT + todoTask.createdAt[2].toString() + "/" + todoTask.createdAt[1].toString() + "/" + todoTask.createdAt[0].toString()}</h3>
                 }
                 {todoTask.ownerId !== parseInt(window.localStorage.getItem("id")) &&
-                  <h3>Creato da {todoTask.ownerNickname}, il {todoTask.createdAt[2].toString() + "/" + todoTask.createdAt[1].toString() + "/" + todoTask.createdAt[0].toString()}</h3>
+                  <h3>{CREATED_BY + todoTask.ownerNickname + AT + todoTask.createdAt[2].toString() + "/" + todoTask.createdAt[1].toString() + "/" + todoTask.createdAt[0].toString()}</h3>
                 }
-                <h4>Da finire entro il {todoTask.completedDate[2].toString() + "/" + todoTask.completedDate[1].toString() + "/" + todoTask.completedDate[0].toString()}</h4>
+                <h4>{TO_FINISH_ON + todoTask.completedDate[2].toString() + "/" + todoTask.completedDate[1].toString() + "/" + todoTask.completedDate[0].toString()}</h4>
                 <div onClick={() => deleteTask(todoTask.id)} ><ion-icon name="trash-outline"></ion-icon></div>
                 <div onClick={() => onClickToEdit(todoTask.id, todoTask.completedDate, todoTask.status)} className="edit"><ion-icon name="create-outline"></ion-icon></div>
               </div>
@@ -224,7 +225,7 @@ export default function Tasks() {
       </div>
       <div className="doingTasks">
         <div className="top">
-          <h2>Stai facendo</h2>
+          <h2>{DOING_TITLE}</h2>
         </div>
         <div className="tasksContent">
           {isLoadingDoing ? (
@@ -235,12 +236,12 @@ export default function Tasks() {
               <div className="task">
                 <h2>{doingTask.name}</h2>
                 {doingTask.ownerId === parseInt(window.localStorage.getItem("id")) &&
-                  <h3>Creato da Te, il {doingTask.createdAt[2].toString() + "/" + doingTask.createdAt[1].toString() + "/" + doingTask.createdAt[0].toString()}</h3>
+                  <h3>{CREATED_BY_AT + doingTask.createdAt[2].toString() + "/" + doingTask.createdAt[1].toString() + "/" + doingTask.createdAt[0].toString()}</h3>
                 }
                 {doingTask.ownerId !== parseInt(window.localStorage.getItem("id")) &&
-                  <h3>Creato da {doingTask.ownerNickname}, il {doingTask.createdAt[2].toString() + "/" + doingTask.createdAt[1].toString() + "/" + doingTask.createdAt[0].toString()}</h3>
+                  <h3>{CREATED_BY + doingTask.ownerNickname + AT + doingTask.createdAt[2].toString() + "/" + doingTask.createdAt[1].toString() + "/" + doingTask.createdAt[0].toString()}</h3>
                 }
-                <h4>Da finire entro il {doingTask.completedDate[2].toString() + "/" + doingTask.completedDate[1].toString() + "/" + doingTask.completedDate[0].toString()}</h4>
+                <h4>{TO_FINISH_ON + doingTask.completedDate[2].toString() + "/" + doingTask.completedDate[1].toString() + "/" + doingTask.completedDate[0].toString()}</h4>
                 <div onClick={() => onClickToEdit(doingTask.id, doingTask.completedDate, doingTask.status)} className="edit"><ion-icon name="create-outline"></ion-icon></div>
               </div>
             ))
@@ -252,7 +253,7 @@ export default function Tasks() {
       </div>
       <div className="doneTasks">
         <div className="top">
-          <h2>Completate</h2>
+          <h2>{DONE_TITLE}</h2>
         </div>
         <div className="tasksContent">
           {isLoadingDone ? (
@@ -263,12 +264,12 @@ export default function Tasks() {
               <div className="task">
                 <h2>{doneTask.name}</h2>
                 {doneTask.ownerId === parseInt(window.localStorage.getItem("id")) &&
-                  <h3>Creato da Te, il {doneTask.createdAt[2].toString() + "/" + doneTask.createdAt[1].toString() + "/" + doneTask.createdAt[0].toString()}</h3>
+                  <h3>{CREATED_BY_AT + doneTask.createdAt[2].toString() + "/" + doneTask.createdAt[1].toString() + "/" + doneTask.createdAt[0].toString()}</h3>
                 }
                 {doneTask.ownerId !== parseInt(window.localStorage.getItem("id")) &&
-                  <h3>Creato da {doneTask.ownerNickname}, il {doneTask.createdAt[2].toString() + "/" + doneTask.createdAt[1].toString() + "/" + doneTask.createdAt[0].toString()}</h3>
+                  <h3>{CREATED_BY + doneTask.ownerNickname + AT + doneTask.createdAt[2].toString() + "/" + doneTask.createdAt[1].toString() + "/" + doneTask.createdAt[0].toString()}</h3>
                 }
-                <h4>Da finire entro il {doneTask.completedDate[2].toString() + "/" + doneTask.completedDate[1].toString() + "/" + doneTask.completedDate[0].toString()}</h4>
+                <h4>{TO_FINISH_ON + doneTask.completedDate[2].toString() + "/" + doneTask.completedDate[1].toString() + "/" + doneTask.completedDate[0].toString()}</h4>
               </div>
             ))
           )}
@@ -278,23 +279,23 @@ export default function Tasks() {
       <div className="addTask">
         <input onChange={(e) => handle(e)} type="text" id="name" placeholder="Nome" value={data.name} />
         <input onChange={(e) => handle(e)} type="date" id="completedDate" placeholder="Da finire entro" />
-        <button onClick={() => onSubmit()} >Crea</button>
+        <button onClick={() => onSubmit()} >{NEXT}</button>
       </div>
       <div className="editTask">
         <div className="edit-left-side">
-          <label htmlFor="">Modifica la data di fine</label>
+          <label htmlFor="">{EDIT_FINISH_DATE}</label>
           <input onChange={(e) => handleEditData(e)} required type="date" className="completedDate" id="edit-completedDate" placeholder="Da finire entro" />
-          <label htmlFor="">Modifica lo stato</label>
+          <label htmlFor="">{EDIT_STATUS}</label>
           <select name="" required onChange={(e) => handleEditData(e)} id="choice" className="status">
-            <option value="todo">Da fare</option>
-            <option value="doing">Stai facendo</option>
-            <option value="done">Finita</option>
+            <option value="todo">{TODO_TITLE}</option>
+            <option value="doing">{DOING_TITLE}</option>
+            <option value="done">{DONE_TITLE}</option>
           </select>
-          <button onClick={() => changeData()}>Avanti</button>
+          <button onClick={() => changeData()}>{NEXT}</button>
         </div>
         <div className="edit-right-side">
           <input onChange={(e) => handleContribution(e)} type="text" placeholder="Aggiungi un utente" value={contributorToAdd} />
-          <button onClick={() => addContribution()} >Avanti</button>
+          <button onClick={() => addContribution()} >{NEXT}</button>
           <div className="contributors">
             {isLoadingContrs ? (
               <SpinnerCircular className='loading-contributors' size={20} color='#7dd87b' thickness={200} secondaryColor={'white'} />

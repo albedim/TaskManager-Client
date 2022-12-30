@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./styles/Header.css";
+import { ENDPOINT } from "../Utils.ts";
 
-export default function Home() {
+export const Header = () => {
 
   const navigate = useNavigate();
 
@@ -15,7 +16,7 @@ export default function Home() {
   }
 
   const getData = () => {
-    axios.get("http://localhost:8080/ap/v1_0_0/user/get?id=" + window.localStorage.getItem("id"))
+    axios.get(ENDPOINT + "/user/get?id=" + window.localStorage.getItem("id"))
     .then(response => { setData(response.data) })
     .catch(error => { console.log(error) })
   }

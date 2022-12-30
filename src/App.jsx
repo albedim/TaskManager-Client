@@ -1,8 +1,8 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Header from './components/Header';
-import LoginBox from './components/LoginBox';
-import SigninBox from './components/SigninBox';
-import Tasks from './components/Tasks';
+import { Header } from './components/Header';
+import { LoginBox } from './components/LoginBox';
+import { SigninBox } from './components/SigninBox';
+import { Tasks } from './components/Tasks';
 
 function App() {
   return (

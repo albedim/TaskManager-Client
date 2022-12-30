@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Form, useNavigate } from "react-router-dom";
 import "./styles/SigninBox.css";
 
-export default function SigninBox() {
+export const SigninBox = () => {
   const [image, setImage] = useState('')
 
   const [isLoading, setIsLoading] = useState(false);
@@ -40,7 +40,7 @@ export default function SigninBox() {
     setIsLoading(true);
     e.preventDefault();
     submitImage();
-    await axios.post("http://localhost:8080/api/signin", data)
+    await axios.post("/user/signin", data)
       .then(response => {
         if (response.data.success) {
           navigate("/");

@@ -1,0 +1,11 @@
+export const ENDPOINT = "http://localhost:8080/api/v_1_0_5";
+export const TODO_TITLE = "Da fare";
+export const DOING_TITLE = "Stai facendo";
+export const DONE_TITLE = "Completate";
+export const NEXT = "Avanti";
+export const CREATED_BY_AT = "Creato da te, il ";
+export const CREATED_BY = "Creato da ";
+export const AT = " il ";
+export const EDIT_FINISH_DATE = "Modifica la data di fine";
+export const EDIT_STATUS = "Modifica lo stato";
+export const TO_FINISH_ON = "Da finire entro il ";
