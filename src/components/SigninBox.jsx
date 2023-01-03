@@ -24,6 +24,8 @@ export const SigninBox = () => {
     setData(newData);
   }
 
+  /*
+
   const submitImage = async () => {
     const reader = new FileReader();
     reader.onloadend = () => {
@@ -35,6 +37,8 @@ export const SigninBox = () => {
       .then(response => { console.log(response.data) })
       .catch(error => { console.log(error) })
   }
+
+  */
 
   const onSubmit = async (e) => {
     setIsLoading(true);
